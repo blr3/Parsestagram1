@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navHome"
+        android:icon="@drawable/instagram_home"
+        android:title="@string/nav_home" />
+    <item
+        android:id="@+id/navSearch"
+        android:icon="@drawable/ic_vector_search_stroke"
+        android:title="@string/nav_search" />
+    <item
+        android:id="@+id/navCampost"
+        android:icon="@drawable/instagram_camera"
+        android:title="@string/nav_cam" />
+    <item
+        android:id="@+id/navNotify"
+        android:icon="@drawable/instagram_notifi"
+        android:title="@string/nav_notify" />
+    <item
+        android:id="@+id/navProfile"
+        android:icon="@drawable/instagram_profile"
+        android:title="@string/nav_profile" />
+</menu>
