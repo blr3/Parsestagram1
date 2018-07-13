@@ -144,17 +144,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     /* Within the RecyclerView.Adapter class */
 
-    // Clean all elements of the recycler
-//    public void clear() {
-//        mTweets.clear();
-//        notifyDataSetChanged();
-//    }
-//
-//    // Add a list of items -- change to type used
-//    public void addAll(List<Tweet> list) {
-//        mTweets.addAll(list);
-//        notifyDataSetChanged();
-//    }
+     // Clean all elements of the recycler
+    public void clear() {
+        posts.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Post> list) {
+        posts.addAll(list);
+        notifyDataSetChanged();
+    }
 
 
 }

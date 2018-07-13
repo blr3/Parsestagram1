@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class HomeFragment extends Fragment {
 
     private void loadTopPost() {
         final Post.Query postQuery = new Post.Query();
-        postQuery.getTop().withUser();
+        postQuery.getTop().withUser().getPostsForUser(ParseUser.getCurrentUser());
 
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override

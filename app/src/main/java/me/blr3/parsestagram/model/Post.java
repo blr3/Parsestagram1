@@ -62,5 +62,10 @@ public class Post extends ParseObject {
             include("user");
             return this;
         }
+
+        public Query getPostsForUser(ParseUser user) {
+            whereEqualTo("user", user);
+            return this;
+        }
     }
 }
