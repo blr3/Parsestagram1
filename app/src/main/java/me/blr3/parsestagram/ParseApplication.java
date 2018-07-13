@@ -21,6 +21,7 @@ public class ParseApplication extends Application {
                 .build();
 
         Parse.initialize(configuration);
+
     }
 }
 

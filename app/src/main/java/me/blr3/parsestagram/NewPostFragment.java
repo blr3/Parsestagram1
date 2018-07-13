@@ -17,9 +17,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
 import java.io.File;
+
+import me.blr3.parsestagram.model.Post;
 
 
 /**
@@ -30,10 +39,17 @@ public class NewPostFragment extends Fragment {
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
     int RESULT_OK = 5;
+    private static String imagePath = "";
+    private EditText caption;
+    private FloatingActionButton addpost;
+    private Button refreshButton;
+    private ImageView imageView;
+
+
     File photoFile;
-    FloatingActionButton button;
-    ImageView imageView;
+    FloatingActionButton photoButton;
     Activity activity;
+    ParseUser user;
 
 
     public NewPostFragment() {
@@ -48,18 +64,37 @@ public class NewPostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_post, container, false);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.ivPicHold);
+        final EditText caption = (EditText) view.findViewById(R.id.etCaption);
 
-        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fabtnCamera);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        FloatingActionButton photoButton = (FloatingActionButton) view.findViewById(R.id.fabtnCamera);
+        photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onLaunchCamera(view);
             }
         });
 
+        FloatingActionButton addpost = (FloatingActionButton) view.findViewById(R.id.fabPost);
+        addpost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String captionInput = caption.getText().toString();
+                final ParseUser user = ParseUser.getCurrentUser();
+                final File file = new File(imagePath);
+                final ParseFile parseFile = new ParseFile(file);
+
+                createPost(captionInput, parseFile, user);
+            }
+        });
+
         return view;
 
-    }
+        }
+
+
+
+
 
 
     @Override
@@ -73,7 +108,7 @@ public class NewPostFragment extends Fragment {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Create a File reference to access to future access
         photoFile = getPhotoFileUri(photoFileName);
-
+        imagePath= photoFile.getPath();
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
@@ -135,7 +170,29 @@ public class NewPostFragment extends Fragment {
             // Load the taken image into a preview
             ImageView ivPreview = (ImageView) activity.findViewById(R.id.ivPicHold);
             ivPreview.setImageBitmap(takenImage);
-            
+
         }
     }
-}
+
+
+
+    private void createPost(String caption, ParseFile takenImage, ParseUser user) {
+        final Post newPost = new Post();
+        newPost.setDescription(String.valueOf(caption));
+        newPost.setImage(takenImage);
+        newPost.setUser(user);
+
+        newPost.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("NewPostFragment", "Create post success!");
+                } else {
+                    e.printStackTrace();
+                    Log.d("NewPostFragment", "Create post fail!");
+                }
+            }
+        });
+    }
+    }
+

@@ -1,22 +1,16 @@
 package me.blr3.parsestagram;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import me.blr3.parsestagram.model.Post;
@@ -24,56 +18,103 @@ import me.blr3.parsestagram.model.Post;
 public class HomeActivity extends AppCompatActivity {
 
     private static final String imagePath = "";
-    private EditText descriptionInput;
-    private Button createButton;
-    private Button refreshButton;
+    ListAdapter listAdapter;
+    ArrayList<Post> posts;
+    RecyclerView recyclerView;
+    private final int REQUEST_CODE = 20;
+    private SwipeRefreshLayout swipeContainer;
 
+    public static final String TAG = TimelineActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        // Only ever call `setContentView` once right at the top
+        setContentView(R.layout.fragment_home2);
+        // Lookup the swipe container view
+        //swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
 
-        descriptionInput = findViewById(R.id.etDescription);
-        createButton = findViewById(R.id.btnCreate);
-        refreshButton = findViewById(R.id.btnRefresh);
+        // implement method
 
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String description = descriptionInput.getText().toString();
-                final ParseUser user = ParseUser.getCurrentUser();
+        // find the RecyclerView
+        recyclerView = (RecyclerView) findViewById(R.id.rvTimeline);
+        // init the arrayList (data source)
+        posts = new ArrayList<>();
+        // construct the adapter from this datasource
+        listAdapter = new ListAdapter(this, posts);
+        // RecyclerView setup (layout manager, use adapter)
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // set the adapter
 
-                final File file = new File(imagePath);
-                final ParseFile parseFile = new ParseFile(file);
+        // Find the toolbar view inside the activity layout
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        //setSupportActionBar(toolbar);
+        Log.d(TAG, "start");
+        // Setup refresh listener which triggers new data loading
+        //swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                // Your code to refresh the list here.
+//                // Make sure you call swipeContainer.setRefreshing(false)
+//                // once the network request has completed successfully.
+//                fetchTimelineAsync(0);
+//            }
+        //});
+        // Configure the refreshing colors
+//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light);
+//
+//        rvTweets.setAdapter(tweetAdapter);
+//        populateTimeline();
 
-                createPost(description, parseFile, user);
-            }
-        });
-
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadTopPost();
-            }
-        });
+        recyclerView.setAdapter(listAdapter);
+        loadTopPost();
 
 
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_home);
+//        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        //setSupportActionBar(toolbar);
+//
+////        descriptionInput = findViewById(R.id.etDescription);
+////        createButton = findViewById(R.id.btnCreate);
+////        refreshButton = findViewById(R.id.btnRefresh);
+//
+//        ListFragment fragment = new ListFragment();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.add(R.id.contentfragment, fragment);
+//        fragmentTransaction.commit();
+//
+//
 
-        final Post.Query postQuery = new Post.Query();
-        postQuery.getTop().withUser();
+//        refreshButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loadTopPost();
+//            }
+//        });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
+//
+       final Post.Query postQuery = new Post.Query();
+//        postQuery.getTop().withUser();
+//
+//        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        //fab.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+////            }
+////        });
+//
         // grab all the post
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
@@ -92,23 +133,24 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void createPost(String description, ParseFile imageFile, ParseUser user) {
-        final Post newPost = new Post();
-        newPost.setDescription(description);
-        newPost.setImage(imageFile);
-        newPost.setUser(user);
 
-        newPost.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.d("HomeActivity", "Create post success!");
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+//    private void createPost(String description, ParseFile imageFile, ParseUser user) {
+//        final Post newPost = new Post();
+//        newPost.setDescription(description);
+//        newPost.setImage(imageFile);
+//        newPost.setUser(user);
+//
+//        newPost.saveInBackground(new SaveCallback() {
+//            @Override
+//            public void done(ParseException e) {
+//                if (e == null) {
+//                    Log.d("HomeActivity", "Create post success!");
+//                } else {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//    }
 
     private void loadTopPost() {
         final Post.Query postQuery = new Post.Query();
@@ -122,6 +164,9 @@ public class HomeActivity extends AppCompatActivity {
                         Log.d("HomeActivity", "Post[" + i + "] = "
                                 + objects.get(i).getDescription()
                                 + "\nusername = " + objects.get(i).getUser().getUsername());
+                        posts.add(0, objects.get(i));
+                        listAdapter.notifyItemChanged(posts.size()-1);
+
                     }
 
                 } else {
@@ -130,6 +175,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
 

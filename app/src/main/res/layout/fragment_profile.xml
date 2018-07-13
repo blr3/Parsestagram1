@@ -21,16 +21,6 @@
             android:layout_marginTop="161dp"
             app:menu="@menu/nav_profile_items"></android.support.design.widget.BottomNavigationView>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="78dp"
-            android:src="@drawable/ic_settings" />
-
         <Button
             android:id="@+id/btnEditPro"
             android:layout_width="154dp"
@@ -47,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/textView2"
-            android:layout_marginEnd="93dp"
+            android:layout_marginEnd="108dp"
             android:text="5,897"
             android:textSize="24sp" />
 
@@ -55,9 +45,12 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/imageView"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="12dp"
+            android:layout_marginEnd="33dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="20dp"
             android:text="134"
             android:textSize="24sp" />
 
@@ -91,9 +84,10 @@
             android:id="@+id/tvFolin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/btnEditPro"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/tvFollowersCount"
-            android:layout_marginRight="8dp"
+            android:layout_marginBottom="-70dp"
+            android:layout_marginEnd="23dp"
             android:text="Following" />
 
         <ImageView
@@ -111,11 +105,23 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/imageView2"
             android:layout_centerVertical="true"
-            android:text="Droid"
+            android:text="Jessie"
             android:textColor="@color/black"
             android:textSize="20dp" />
 
+        <ImageButton
+            android:id="@+id/ibSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btnEditPro"
+            android:layout_marginStart="-47dp"
+            android:layout_toEndOf="@+id/btnEditPro"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_settings" />
+
 
     </RelativeLayout>
+
+
 
 </FrameLayout>

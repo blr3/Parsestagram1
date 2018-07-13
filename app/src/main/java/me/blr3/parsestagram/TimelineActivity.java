@@ -35,7 +35,7 @@ public class TimelineActivity extends AppCompatActivity {
         notificationFragment = new NotificationFragment();
         profileFragment = new ProfileFragment();
 
-
+        setFragment(homeFragment);
         tool.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

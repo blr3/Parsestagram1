@@ -11,6 +11,7 @@ public class Post extends ParseObject {
     private static final String KEY_DESCRIPITION = "description";
     private static final String KEY_IMAGE = "image";
     private static final String KEY_USER = "user";
+    private static final String KEY_TIME = "createdAt";
 
     public String getDescription() {
         return getString(KEY_DESCRIPITION);
@@ -34,6 +35,17 @@ public class Post extends ParseObject {
 
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
+    }
+
+
+    //public Date getCreatedAt() {return getString(KEY_TIME);}
+
+//    public static ParseFile getMedia() {
+//        return getParseFile("media");
+//    }
+
+    public void setMedia(ParseFile parseFile) {
+        put("media", parseFile);
     }
 
     public static class Query extends ParseQuery<Post> {
