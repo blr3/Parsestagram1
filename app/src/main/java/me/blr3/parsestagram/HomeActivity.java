@@ -12,6 +12,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import me.blr3.parsestagram.model.Post;
@@ -43,6 +44,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // set the adapter
 
+        recyclerView.setAdapter(listAdapter);
         // Find the toolbar view inside the activity layout
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -137,8 +139,8 @@ public class HomeActivity extends AppCompatActivity {
 //    }
 
     private void loadTopPost() {
-        posts.clear();
-        listAdapter.clear();
+//        posts.clear();
+//        listAdapter.clear();
         final Post.Query postQuery = new Post.Query();
         Toast.makeText(this, ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_LONG).show();
         postQuery.getTop().withUser().getPostsForUser(ParseUser.getCurrentUser());
@@ -148,6 +150,7 @@ public class HomeActivity extends AppCompatActivity {
                 Log.i("mum", String.valueOf(objects.size()));
                 if (e == null) {
                     posts.addAll(objects);
+                    Collections.reverse(posts);
                     listAdapter.notifyDataSetChanged();
 
                 } else {

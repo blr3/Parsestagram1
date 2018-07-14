@@ -171,6 +171,7 @@ public class NewPostFragment extends Fragment {
             ImageView ivPreview = (ImageView) activity.findViewById(R.id.ivPicHold);
             ivPreview.setImageBitmap(takenImage);
 
+
         }
     }
 
@@ -178,7 +179,7 @@ public class NewPostFragment extends Fragment {
 
     private void createPost(String caption, ParseFile takenImage, ParseUser user) {
         final Post newPost = new Post();
-        newPost.setDescription(String.valueOf(caption));
+        newPost.setDescription(caption);
         newPost.setImage(takenImage);
         newPost.setUser(user);
 
@@ -195,8 +196,7 @@ public class NewPostFragment extends Fragment {
         });
 
 
-        Intent intent = new Intent(getContext(), HomeFragment.class);
-        startActivity(intent);
+
 
     }
     }
