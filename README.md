@@ -47,7 +47,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-[<img src="http://www.google.com.au/images/nav_logo7.png">](Parse Gif)
+[<img src="https://github.com/blr3/Parsestagram1/blob/master/ParseGif.gif">](Parse Gif)
 
 GIF created with [Recordit](http://recordit.co/).
 
