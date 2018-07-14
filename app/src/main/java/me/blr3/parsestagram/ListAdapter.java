@@ -45,36 +45,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         // populate the views according to this data
         holder.tvUsername.setText(post.getUser().getUsername());
         holder.tvdescript.setText(post.getDescription());
+        holder.tvTimeStamp.setText(post.getCreatedAt().toString().substring(0,11));
 //        holder.tvTimeStamp.setText(post.createdAt.substring(0, 12));
 //        holder.tvTimeStamp.setText(getRelativeTimeAgo(Post.createdAt));
         Glide.with(context).load(post.getImage().getUrl()).into(holder.pivpost);
     }
     // for each row, inflate the layout and cache references into ViewHolder - based on row we are showing we need to bind the value of the tweet object to that element
-
-
-//
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-//        ((ListViewHolder) holder).bindView(position);
-//    }
-//
-//
-//    private abstract class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//
-//        private TextView usern;
-//        private ParseImageView postpic;
-//        private BottomNavigationView lcs;
-//        private BottomNavigationView saved;
-//
-//        public ListViewHolder(View itemView) {
-//
-//            super(itemView);
-//
-//        }
-//
-
-//}
 
 
     // bind the values based on the position of the element
@@ -108,39 +84,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             pivpost = (ParseImageView) itemView.findViewById(R.id.pivpost);
             nbNavHom = (BottomNavigationView) itemView.findViewById(R.id.nbNavHom);
             nbHom = (BottomNavigationView) itemView.findViewById(R.id.nbHom);
+            tvTimeStamp = (TextView) itemView.findViewById(R.id.tvTimestamp);
             //tvTimeStamp = (TextView) itemView.findViewById(R.id.tvTimeStamp);
             //itemView.setOnClickListener();
 
         }
     }
-
-//        public void bindView(int position) {
-//            usern.setText(ParseUser.getCurrentUser().getUsername());
-//            postpic.setImageBitmap(postpic.setParseFile(Post.getMedia());
-//            postpic.loadInBackground();
-//        }
-
-
-//    // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
-//    public String getRelativeTimeAgo(String rawJsonDate) {
-//        Log.d("*********", "im here");
-//        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-//        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
-//        sf.setLenient(true);
-//
-//        String relativeDate = "";
-//        try {
-//            long dateMillis = sf.parse(Post.getString("createdAT")).getTime();
-//            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
-//                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Log.d("********", relativeDate);
-//
-//        return relativeDate;
-//    }
 
     /* Within the RecyclerView.Adapter class */
 

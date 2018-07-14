@@ -1,7 +1,6 @@
 package me.blr3.parsestagram;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<Post> posts;
     RecyclerView recyclerView;
     private final int REQUEST_CODE = 20;
-    private SwipeRefreshLayout swipeContainer;
+
 
     public static final String TAG = TimelineActivity.class.getSimpleName();
 
@@ -33,11 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Only ever call `setContentView` once right at the top
         setContentView(R.layout.fragment_home2);
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-
         // implement method
-
         // find the RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.rvTimeline);
         // init the arrayList (data source)
@@ -55,26 +50,12 @@ public class HomeActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
         Log.d(TAG, "start");
         // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                //fetchTimelineAsync(0);
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
-        recyclerView.setAdapter(listAdapter);
-        //populateTimeline();
+        // Lookup the swipe container view
 
 
         loadTopPost();
+
+    }
 
 
 //    @Override
@@ -136,7 +117,7 @@ public class HomeActivity extends AppCompatActivity {
 //        });
 //    }
 //
-    }
+
 //    private void createPost(String description, ParseFile imageFile, ParseUser user) {
 //        final Post newPost = new Post();
 //        newPost.setDescription(description);
@@ -156,6 +137,8 @@ public class HomeActivity extends AppCompatActivity {
 //    }
 
     private void loadTopPost() {
+        posts.clear();
+        listAdapter.clear();
         final Post.Query postQuery = new Post.Query();
         Toast.makeText(this, ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_LONG).show();
         postQuery.getTop().withUser().getPostsForUser(ParseUser.getCurrentUser());
@@ -164,16 +147,27 @@ public class HomeActivity extends AppCompatActivity {
             public void done(List<Post> objects, ParseException e) {
                 Log.i("mum", String.valueOf(objects.size()));
                 if (e == null) {
-                    for (int i = 0; i < objects.size(); ++i) {
+                    posts.addAll(objects);
+                    listAdapter.notifyDataSetChanged();
 
-                        Log.d("HomeActivity", "Post[" + i + "] = "
-                                + objects.get(i).getDescription()
-                                + "\nusername = " + objects.get(i).getUser().getUsername());
-                        posts.add(0, objects.get(i));
-                        listAdapter.notifyItemChanged(posts.size()-1);
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-                    }
-
+    public void fetchTimelineAsync(int page) {
+        final Post.Query postQuery = new Post.Query();
+        Toast.makeText(this, ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_LONG).show();
+        postQuery.getTop().withUser().getPostsForUser(ParseUser.getCurrentUser());
+        postQuery.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> objects, ParseException e) {
+                if (e == null) {
+                    listAdapter.clear();
+                    listAdapter.addAll(posts);
+                    //swipeContainer.setRefreshing(false);
                 } else {
                     e.printStackTrace();
                 }

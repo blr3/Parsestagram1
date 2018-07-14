@@ -1,6 +1,7 @@
 package me.blr3.parsestagram;
 
 import android.content.Intent;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordInput;
     private Button loginBtn;
     private Button signupBtn;
+    public TransitionDrawable trans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //animationDrawable = (AnimationDrawable)RelativeLayout.getBackground();
+        //animationDrawable.setEnterFadeDuration(5000);
+        //animationDrawable.setExitFadeDuration(2000);
+        // onResume
+        //animationDrawable.start();
+
     }
 
     private void login(String username, String password) {
