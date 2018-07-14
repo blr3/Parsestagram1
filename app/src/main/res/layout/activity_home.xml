@@ -18,11 +18,10 @@
         android:id="@+id/tvUsername"
         android:layout_width="218dp"
         android:layout_height="36dp"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="146dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="31dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="29dp" />
 
 
     <!--<ImageView-->
@@ -62,7 +61,7 @@
         android:layout_height="35dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/nbNavHom"
-        android:layout_marginStart="20dp" />
+        android:layout_marginLeft="10dp" />
 
     <View
         android:id="@+id/divider3"
@@ -76,8 +75,9 @@
         android:id="@+id/tvTimestamp"
         android:layout_width="122dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tvUsername"
-        android:layout_below="@+id/tvdescript" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvdescript"
+        android:layout_marginLeft="10dp" />
 
 
 </RelativeLayout>

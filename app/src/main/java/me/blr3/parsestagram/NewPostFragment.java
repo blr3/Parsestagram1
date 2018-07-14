@@ -193,6 +193,11 @@ public class NewPostFragment extends Fragment {
                 }
             }
         });
+
+
+        Intent intent = new Intent(getContext(), HomeFragment.class);
+        startActivity(intent);
+
     }
     }
 

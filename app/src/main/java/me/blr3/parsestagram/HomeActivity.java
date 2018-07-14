@@ -157,23 +157,23 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    public void fetchTimelineAsync(int page) {
-        final Post.Query postQuery = new Post.Query();
-        Toast.makeText(this, ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_LONG).show();
-        postQuery.getTop().withUser().getPostsForUser(ParseUser.getCurrentUser());
-        postQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> objects, ParseException e) {
-                if (e == null) {
-                    listAdapter.clear();
-                    listAdapter.addAll(posts);
-                    //swipeContainer.setRefreshing(false);
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+//    public void fetchTimelineAsync(int page) {
+//        final Post.Query postQuery = new Post.Query();
+//        Toast.makeText(this, ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_LONG).show();
+//        postQuery.getTop().withUser().getPostsForUser(ParseUser.getCurrentUser());
+//        postQuery.findInBackground(new FindCallback<Post>() {
+//            @Override
+//            public void done(List<Post> objects, ParseException e) {
+//                if (e == null) {
+//                    listAdapter.clear();
+//                    listAdapter.addAll(posts);
+//                    //swipeContainer.setRefreshing(false);
+//                } else {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//    }
 
 
 }
