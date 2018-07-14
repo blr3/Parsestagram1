@@ -47,9 +47,9 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://s3.amazonaws.com/img0.recordit.co/1dmXI7Hc9J.mp4?AWSAccessKeyId=AKIAINSRFOQXTN4DT46A&Expires=1531540815&Signature=SZkv5nokRKS9UAV58BWVlezN%2Bs8%3D' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![Walkthrough](parse.mp4)
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+GIF created with [Recordit](http://recordit.co/).
 
 ## Credits
 
