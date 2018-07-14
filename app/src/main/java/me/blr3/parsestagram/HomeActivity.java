@@ -150,7 +150,6 @@ public class HomeActivity extends AppCompatActivity {
                 Log.i("mum", String.valueOf(objects.size()));
                 if (e == null) {
                     posts.addAll(objects);
-                    Collections.reverse(posts);
                     listAdapter.notifyDataSetChanged();
 
                 } else {
