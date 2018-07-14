@@ -47,7 +47,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-![Walkthrough](parse.mp4)
+![Walkthrough](ParseGif.gif)
 
 GIF created with [Recordit](http://recordit.co/).
 
